@@ -11,9 +11,9 @@ import datetime
 def create_user_data():
     # print('Creating')
     db.session.add(User('admin k','admin','k', 'admin@example.com',generate_password_hash('123456')
-                        ,'admin',datetime.datetime.now(),'../assets/profile_pics/csk.jpg',True))
+                        ,'admin',datetime.datetime.now(),'../assets/profile_pics/csk.jpg',True,None,None,None,None,None,datetime.date(1990, 5, 15)))
     db.session.add(User('guest k','guest','k', 'guest@example.com',generate_password_hash('123456')
-                        ,'normal',datetime.datetime.now(),'../assets/profile_pics/dsk.jpg',True))
+                        ,'normal',datetime.datetime.now(),'../assets/profile_pics/dsk.jpg',True,None,None,None,None,None,datetime.date(1990, 5, 15)))
     db.session.commit()
 
 # products

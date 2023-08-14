@@ -57,7 +57,8 @@ def login():
         return jsonify(existing_user.to_dict()), 200
 
     new_user = user_service.create_user(fullname,given_name,family_name, email
-                                        ,password, user_type, registered_on,picture, is_active)
+                                        ,password, user_type, registered_on,picture, is_active
+                                        ,None,None,None,None,None,datetime.date(1990, 5, 15))
     
     access_token = create_access_token(identity=email)
     response = jsonify({'logintoken': access_token})
@@ -69,23 +70,48 @@ def login():
     # return jsonify(new_user.to_dict()), 201
 
 @users_bp.route('/users/<int:user_id>', methods=['PUT'])
-@jwt_required
+# @jwt_required
 def update_user(user_id):
     user = user_service.get_user_by_id(user_id)
     if not user:
         return jsonify(error='User not found'), 404
 
     data = request.get_json()
-    username = data.get('username')
+    fullname = data.get('fullname')
+    given_name = data.get('given_name')
+    family_name = data.get('family_name')
     email = data.get('email')
     password = data.get('password')
+    user_type = data.get('user_type')
+    registered_on = data.get('registered_on')
+    picture = data.get('picture')
+    is_active = data.get('is_active')
+    gender = data.get('gender')
+    education = data.get('education')
+    income = data.get('income')
+    occupation = data.get('occupation')
+    age = data.get('age')
+    dob = data.get('dob')
 
-    if not username or not email or not password:
+    if not email:
         return jsonify(error='Missing required fields'), 400
-
-    user.username = username
+    
+    user.fullname = fullname
+    user.given_name = given_name
+    user.family_name = family_name
     user.email = email
     user.set_password(password)
+    user.user_type = user_type
+    user.registered_on = registered_on
+    user.picture = picture
+    user.is_active = is_active
+    user.gender = gender
+    user.education  = education 
+    user.income = income
+    user.occupation = occupation
+    user.age = age
+    user.dob = dob 
+
     db.session.commit()
 
     return jsonify(user.to_dict())
