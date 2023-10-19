@@ -60,7 +60,7 @@ def login():
                                         ,password, user_type, registered_on,picture, is_active
                                         ,None,None,None,None,None,datetime.date(1990, 5, 15))
     
-    access_token = create_access_token(identity=email)
+    access_token = create_access_token(identity=email,  additional_claims={'user_type': user_type})
     response = jsonify({'logintoken': access_token})
     # response.headers.add('Access-Control-Allow-Origin', '*')
     # return response

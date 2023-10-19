@@ -30,11 +30,11 @@ def create_app(config_name):
     # with app.app_context():
     
     # cors.init_app(app)
-    CORS_ALLOW_ORIGIN="127.0.0.1:19006, localhost:19006"
-    CORS_EXPOSE_HEADERS="*,*"
-    CORS_ALLOW_HEADERS="content-type,*"
-    CORS(app, origins=CORS_ALLOW_ORIGIN.split(","), allow_headers=CORS_ALLOW_HEADERS.split(",") , 
-                expose_headers= CORS_EXPOSE_HEADERS.split(","),   supports_credentials = True)
+    # CORS_ALLOW_ORIGIN="127.0.0.1:19006, localhost:19006"
+    # CORS_EXPOSE_HEADERS="*,*"
+    # CORS_ALLOW_HEADERS="content-type,*"
+    # CORS(app, origins=CORS_ALLOW_ORIGIN.split(","), allow_headers=CORS_ALLOW_HEADERS.split(",") , 
+    #             expose_headers= CORS_EXPOSE_HEADERS.split(","),   supports_credentials = True)
 
 
 # app.py
@@ -94,4 +94,16 @@ configurations = {
     # Add more configurations as needed
 }
 
+from functools import wraps
+from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
 
+
+def admin_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        verify_jwt_in_request()  # Verify that a valid JWT is in the request
+        identity = get_jwt_identity()
+        if identity.get('user_type') != 'admin':
+            return jsonify(message='Admins only!'), 403
+        return fn(*args, **kwargs)
+    return wrapper

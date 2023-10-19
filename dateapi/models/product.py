@@ -19,3 +19,4 @@ class Product(db.Model):
         self.image = image
         self.isActive = isActive
 
+

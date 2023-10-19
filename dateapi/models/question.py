@@ -9,10 +9,10 @@ class Question(db.Model):
     product = db.Column(db.String(200), unique=False, nullable=False)
     ques = db.Column(db.String(200), unique=False, nullable=False)
     optiona = db.Column(db.String(200), unique=False, nullable=False)
-    optionb = db.Column(db.String(200), unique=False, nullable=False)
-    optionc = db.Column(db.String(200), unique=False, nullable=False)
-    optiond = db.Column(db.String(200), unique=False, nullable=False)
-    rightans = db.Column(db.String(200), unique=False, nullable=False)
+    optionb = db.Column(db.String(200), unique=False, nullable=True)
+    optionc = db.Column(db.String(200), unique=False, nullable=True)
+    ptiond = db.Column(db.String(200), unique=False, nullable=True)
+    rightans = db.Column(db.String(200), unique=False, nullable=True)
 
     def __init__(self, productId, product, ques, optiona, optionb, optionc, optiond, rightans):
         self.productId = productId
