@@ -26,7 +26,7 @@ product_service = ProductService()
 def products():    
     products = Product.query.all()
     product_list = []
-    
+     
     for product in products:
         product_data = {
             'id': product.id,
